@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Reaction</title>
+  <link rel="icon" type="image/png" href="rubicsCube.png">
+  <link rel="stylesheet" href="js-neu.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.6/lottie.min.js"></script>
+</head>
+<body class="body" style="position: relative;">
+   
+<div id="letsTestOverlay" class="overlay" style="display: none;">
+  <div class="overlay-content animate-popup">
+    <p class="overlay-text">Let's Test!</p>
+  </div>
+</div>
+
+<div id="transitionOverlay">
+  <div class="ring"></div>
+  <div class="ring"></div>
+  <div class="ring"></div>
+</div>
+
+<div id="startbildschirm" class="sichtbar">
+  <canvas id="shaderCanvas"></canvas>
+
+  <div class="login-container"> <div id="bright"></div>
+    <div class="language-switch" id="langSwitch"><div class="lang-circle"></div><label for="langSwitch" style="left: 11px;">DE</label></div>
+    <h1 id="welcome">Hallo <span id="typedName"></span><span id="cursor" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">|</span></h1>
+    <input id="spielerName" type="text" placeholder="Dein Name" style="font-family:orbitron, sans-serif;">
+    <label><input type="checkbox" id="anonym"> Ich möchte anonym bleiben</label>
+    <input id="spielerAlter" type="number" placeholder="Dein Alter" min="1" max="100"  style="font-family:orbitron, sans-serif;">
+    <div class="geschlecht-box">
+      <label><input type="radio" name="geschlecht" value="m" id="man"> Männlich</label>
+      <label><input type="radio" name="geschlecht" value="w" id="woman"> Weiblich</label>
+    </div>
+    <button id="startWeiterBtn">Anmelden</button>
+  </div>
+</div>
+
+<div id="timeOverContainer" style="display: none;"><div id="timeOver" style="display: none;">
+  Time Over!
+</div>
+</div>  
+
+<div id="mainContent" style="display: none;">
+
+<div id="einschaetzungsOverlay" class="overlay" style="display: none;">
+  <div class="einschaetzungsBox">
+    <p>Wie viele Farben schätzt du zu schaffen?</p>
+    <input type="number" type="text" id="einschaetzungInput" placeholder="Wie viele Farben in 1 Min?" min="1" max="100">
+    <div id="einschaetzungFehler" class="fehlerText"></div>
+    <button id="einschaetzungBtn">Bestätigen</button>
+  </div>
+</div>
+
+<div id="gameStart" style="display: none;">
+</div>
+
+    <div id="platzmacher"></div>
+
+
+    <div class="anzeige-wrapper" class="gamecontent">
+    <div class="colorchanger" class="gamecontent"></div>
+    <div class="punktezeiger" style="font-weight: 100;" class="gamecontent" ></div>
+  </div>
+
+    <div id="inputBlock">
+      <input id="input" type="text" placeholder="Gebe die Farbe ein..." style="display: none;">
+    </div>
+
+  <div id="Eingang">
+  <div id="platzhalterZwei"></div>
+  <div class="intro-wrapper" style="display: static;">
+    <div class="intro-title">Willkommen zum Farb-Reaktionsspiel!</div>
+<br><br>
+    <div id="startCards">
+      <div class="aspect-card">
+        <div class="aspect-header">Wissenswertes</div>
+        <div class="aspect-content">
+          <div class="intro-highlight">Was passiert in deinem Körper, wenn du reagierst?</div>
+          <div class="intro-text">
+            Deine Augen (Rezeptoren) erkennen Farben und senden die Info über <strong>afferente Nerven</strong> ans Gehirn.
+            Dort wird entschieden, was zu tun ist. Dann geht das Signal über <strong>efferente Bahnen</strong> zurück zu deinen Fingern – du tippst!
+            Das Gehirn überprüft über <strong>Reafferenzen</strong>, ob alles wie geplant ausgeführt wurde.
+          </div>
+          <div class="intro-subtle">Dieses Zusammenspiel von Wahrnehmung und Handlung nennt man <strong>Sensomotorik</strong>.</div>
+        </div>
+      </div>
+<br> <br>
+      <div class="aspect-card">
+        <div class="aspect-header">Über das Spiel</div>
+        <div class="aspect-content">
+          <div class="intro-highlight">Wie funktioniert das Spiel?</div>
+          <div class="intro-list">
+            <ul>
+              <li>Eine Farbe erscheint</li>
+              <li>Du tippst blitzschnell den Namen ein</li>
+              <li>Du wirst mit jeder Runde schneller</li>
+            </ul>
+          </div>
+          <div class="intro-info">
+            <ul>
+              <strong>Am Anfang gibst du an, wie viele Farben du in 1 Minute erkennst. Am Ende zeigen wir dir:</strong>
+              <li>Deine wahre Leistung</li>
+              <li>Deine Reaktionszeit auf unbekannte Reize</li>
+              <li>Deine Reaktionszeit auf bekannte Reize</li>
+              <li>Die Geschwindigkeit deiner Rythmisierung</li>
+              <li>Wie gut du dich selbst einschätzen kannst</li>
+              <li>Wie gut deine Zeitwahrnehmung ist</li>
+              <li>Wie gut deine Aufmerksamkeitsspanne ist</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+<br> <br>
+      <div class="aspect-card">
+        <div class="aspect-header">Spielhinweise</div>
+        <div class="aspect-content">
+          <div class="intro-highlight">Wie schnell ist dein Gehirn wirklich?</div>
+          <div class="intro-text">
+            Wenn du im Spiel eine Farbe siehst und darauf reagierst,
+            <em> passiert blitzschnell</em>
+            eine ganze Menge in deinem Körper
+            <em>– und du merkst es kaum!</em>
+            <br><br>
+            1. Reiz wahrnehmen (ca. 50–100 ms) <br>
+            Deine Augen erkennen die Farbe. Die Sinneszellen in der Netzhaut senden die Info über afferente Nervenbahnen ins Gehirn. <br><br>
+            2. Farbe verarbeiten & erkennen (ca. 100–150 ms) <br>
+            Dein Gehirn sagt: „Ah – das ist <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ und gleicht es mit deinem Gedächtnis ab. <br><br>
+            3. Entscheidung treffen (ca. 70–100 ms) <br>
+            Du wählst blitzschnell den passenden Handlungsplan: „Ich schreibe <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ <br><br>
+            4. Aktion ausführen (ca. 100–150 ms) <br>
+            <strong>Dein Befehl reist über efferente Bahnen zu deinen Fingern – du tippst los!</strong>
+            <br><br>
+            <em>Für all das braucht der Mensch im Durchschnitt ~ 1.000ms - Teste Dich! <strong>Wie gut bist Du?</strong></em>
+          </div>
+        </div>
+      </div>
+
+    </div>
+<br><br>
+    <div class="intro-call">Bereit <span style="font-family: Number, sans serif; font-size: 50px; vertical-align: middle; font-weight: 400;"><i class="Quest" style="bottom: 20%; position: relative;">?</i></span><span style="visibility: hidden; font-size: 30px;">o</span>Dann leg los und finde heraus, wie schnell dein Kopf wirklich ist!</div>
+  </div>
+  <div id="platzhalter"></div>
+
+  <div class="containerNachClick">
+    <button id="gameBtnSec">Eingabe</button>
+  </div>
+
+  <div class="EingabeInfosContainer sichtbar">
+    <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red; font-family: orbitron, sans-serif;">Game Hinweise</div>
+    <div id="EingabeInfosText" style="font-size:15px; padding: 15px;line-height: 24px;">
+  <li>Für eine vollständige Auswertung musst du mindestens 20 Farben schaffen.</li>
+  <li>„Weiss“ und „Weiß“ zählen beide als richtig.</li>
+  <li>Leerzeichen, Groß-,Kleinschreibung werden ignoriert – tippe einfach los!</li>
+  <li>Vertippt? Kein Problem – einfach eingeben, das Feld leert sich automatisch.</li>
+  <li>Für die Eingabe kannst du den Button oder die Eingabe-Taste auf deiner Tastatur nutzen</li> <br>
+  </div>
+  </div>
+      <div class="container">
+      <button id="gameBtn">Spielstart</button>
+    </div>
+  <div id="wuerfelAnimation"></div>
+</div>
+
+    <div id="textAdj">
+      <p id="text"> </p>
+      <p id="play"> </p>
+    </div>
+
+    <div id="feedbackRight">Richtig!</div>
+    <div id="feedbackFalse">Falsch!</div>
+
+    <div id="timer" class="gamecontent">
+      <div class="card" id="sekTens">0</div>
+      <div class="card" id="sek">0</div>
+      <div class="card" id="msHundreds">0</div>
+      <div class="card" id="msTens">0</div>
+    </div>
+
+  <div class="auswertung" style="height: auto; width: auto;">
+    <div class="auswertung-box" style="margin-top: 50vh;">
+      <div  class="auswertung-item" id="ranglisteContainer"></div>
+      <div class="auswertung-item" id="box-reaktion-beste"></div>
+      <div class="auswertung-item" id="box-einschaetzung"></div>
+      <div class="auswertung-item" id="box-punkte"></div>
+      <div class="auswertung-item" id="box-reaktion-unbekannt"></div>
+      <div class="auswertung-item" id="box-reaktion-bekannt"></div>
+      <canvas class="auswertung-item" id="reaktionsChart"></canvas>
+    </div>
+    <button id="nextRoundBtn" style="display:none;">Neue Runde</button>
+  </div>
+
+</div>
+<script type="x-shader/x-fragment" id="fragShader">
+  precision mediump float;
+  uniform float iTime;
+  uniform vec2 iResolution;
+  void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+    vec2 uv = fragCoord.xy / iResolution.xy;
+    uv = uv * 2.0 - 1.0;
+    uv.x *= iResolution.x / iResolution.y;
+    float t = iTime * 0.2;
+    float r = length(uv);
+    float a = atan(uv.y, uv.x);
+    float f = cos(10.0 * (r + t)) * 0.5 + 0.5;
+    float glow = 0.005 / abs(f - 0.5);
+    vec3 col = mix(vec3(0.165), vec3(0.0, 1.0, 1.0), clamp(glow, 0.0, 1.0));
+    fragColor = vec4(col, 1.0);
+  }
+  void main() {
+    mainImage(gl_FragColor, gl_FragCoord.xy);
+  }
+</script>
+<script src="background-animation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js-neu.js"></script>
+</body>
+</html>
