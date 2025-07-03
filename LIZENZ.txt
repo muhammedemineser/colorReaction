@@ -1,0 +1,9 @@
+Copyright (c) 2025 Muhammed Emin Eser
+
+Alle Rechte vorbehalten.
+
+Der Quellcode dieses Spiels darf ohne ausdrückliche schriftliche Erlaubnis weder kopiert, verändert, verbreitet noch kommerziell genutzt werden.
+
+Die öffentliche Nutzung über die bereitgestellte Website (z. B. GitHub Pages) ist gestattet.
+
+Kontakt: uxd.mee@gmail.com
